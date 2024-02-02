@@ -1,0 +1,94 @@
+<div class="row demo">
+    <div class="col-xs-12" style="align-items: center;">
+        <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" formControlName="name" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="imagePath">Image URL</label>
+                                <input type="text" id="imagePath" formControlName="imagePath" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <img src="" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea type="text" id="description" formControlName="description"
+                                    class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <hr>
+                    <label for="description">Add Ingredients: &nbsp;</label>
+                    <p-multiSelect [options]="ingredients" [(ngModel)]="ingredients" optionLabel="name"
+                        placeholder="Select/Add Ingredients" [style]="{'width': '43%'}"
+                        (onChange)="onAddIngredient($event)">
+                    </p-multiSelect>
+
+                    <!-- <hr> -->
+                    <div class="row">
+                        <div class="col-xs-12" formArrayName="ingredient">
+                            <div class="row"
+                                *ngFor="let ingredientCtrl of recipeForm.get('ingredient')['controls']; let i = index"
+                                [formGroupName]="i" style="margin-top: 10px;">
+                                <!-- <p-scroller [items]="ingredientCtrl" [itemSize]="50" scrollHeight="200px" styleClass="border-1 surface-border" [style]="{'width': '200px', 'height': '200px'}">
+                                    <ng-template pTemplate="item" let-item let-options="options">
+                                        <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }" style="height: 50px;">{{ item.name }} </div>
+                                        <input 
+                                        class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }" style="height: 50px;"
+                                        type="text" formControlName="name" class="form-control input1">
+                                    </ng-template>
+                                </p-scroller> -->
+                                <div class="col-xs-8">
+                                    <input type="text" formControlName="name" class="form-control input1">
+                                </div>
+                                <!-- <div class="col-xs-2">
+                                    <input type="number" formControlName="amount" class="form-control">
+                                </div> -->
+                                <div class="col-xs-2">
+                                    <button type="button" class="btn btn-danger"
+                                        (click)="onDeleteIngredient(i)">X</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="btn-toolbar">
+                        <button type="submit" [disabled]="!recipeForm.valid " class="btn btn-success">Save</button>
+                        <button type="button" class="btn btn-danger right" (click)="onCancel()">Cancel</button>
+                    </div>
+                </div>
+                    <div class="col-xs-6">
+                        <div class="btn-toolbar">
+                            <button type="button"  *ngIf="editMode" class="btn btn-primary" (click)="onAddToShoppingList()">To
+                                Shopping List</button>
+                            <button *ngIf="editMode" type="button" class="btn btn-danger"
+                                (click)="onDeleteRecipe()">Delete Recipe</button>
+                        </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
